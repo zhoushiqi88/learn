@@ -197,5 +197,26 @@ for {set i 1} {$i <= $link_num} {incr i} {
 set path_tcp_num [expr 50]
 
 # 设置每一条TCP流量的起始时间
-for {set i 1} {$i <= $link_num} 
+for {set i 1} {$i <= $link_num} {incr i} {
+        for {set j 1} {$j <= $path_tcp_num} {incr j} {
+                # 设置起始时间
+                set lts [new RondomVariable/Uniform]
+                $lts set min_ $start_time
+                $lts set max_ [expr $start_time + ($ended_time - $start_time) * 0.1]
+                $lts use-rng $rng
+                set l_start($i,$j) [expr [$lts value]]
+                # 设置结束时间
+                set lte [new RandomVariable/Uniform]
+                $lte set min_ [expr $ended_time - ($ended_time - $start_time) * 0.1]
+                $lte set max_ $ended_time
+                $lte use-rng $rng
+                set l_stop($i,$j) [expr [$lte value]]
+        }
+}
+# 设置每一条UDP流量
+for {set i 1} {$i <= $link_num} {incr i} {
+        for {set j 1} {$j <= $path_tcp_num} {incr j} {
+                
+        }
+}
 
