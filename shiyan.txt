@@ -176,5 +176,26 @@ for {set i 1} {$i <= $link_unm} {incr i} {
         }
 }
 # 设置每一条UDP流量
-for {set i 1} {$i <= $link_num}
+for {set i 1} {$i <= $link_num} {incr i} {
+        for {set j 1} {$j <= $link_udp_num} {incr j} {
+                set s_udp{$i,$j} [new Agent/UDP]
+                $ns attach-agent $n($ls($i)) $s_udp($i,$j)
+                set d_null($i,$j) [new Agent/Null]
+                $ns attach-agent $n($ld($i)) $d_null($i,$j)
+                $ns connect $s_udp($i,$j) $d_null($i,$j)
+
+                set par($i,$j) [new Application/Traffic/Pareto]
+                $par($i,$j) attach-agent $s_udp($i,$j)
+                $par($i,$j) set burst_time_ 200ms;
+                $par($i,$j) set idle_time_ 200ms;
+                $par($i,$j) set rate_ 0.1Mb;
+                $par($i,$j) set packetSize_ 500
+                $par($i,$j) set shape_1.5
+        }
+}
+# 添加TCP流量
+set path_tcp_num [expr 50]
+
+# 设置每一条TCP流量的起始时间
+for {set i 1} {$i <= $link_num} 
 
