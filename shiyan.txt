@@ -1,0 +1,180 @@
+set ns [new Simulator]
+set tracefile [open "|grep \"cbr\" > out.tr" w]
+$ns trace-all $tracefile
+proc finish {} {
+        global ns tracefile
+        $ns flush-trace
+        close $tracefile
+        exit 0
+}
+set start_time 0.00000000;
+set dende_time 40;
+set packet_interval 0.05;
+set dest_node_num 20;
+set dest_node_start 15;
+set dest_node_end 34;
+set link_num 34;
+set node_num 35;
+set rng [new RNG]
+$rng seed 0
+# 创建节点
+for {set i 0} {$i < $node_num} {incr i} {
+        set n($i) [$ns node]
+}
+# 创建链路
+$ns duplex-link $n(0) $n(1) 50Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(5) 50Mb 20ms DropTail;
+$ns duplex-link $n(5) $n(15) 50Mb 20ms DropTail;
+$ns duplex-link $n(5) $n(16) 50Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(6) 50Mb 20ms DropTail;
+$ns duplex-link $n(6) $n(17) 50Mb 20ms DropTail;
+$ns duplex-link $n(6) $n(18) 50Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(7) 50Mb 20ms DropTail;
+$ns duplex-link $n(7) $n(19) 50Mb 20ms DropTail;
+$ns duplex-link $n(7) $n(20) 50Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(2) 50Mb 20ms DropTail;
+$ns duplex-link $n(2) $n(8) 50Mb 20ms DropTail;
+$ns duplex-link $n(8) $n(21) 50Mb 20ms DropTail;
+$ns duplex-link $n(8) $n(22) 50Mb 20ms DropTail;
+$ns duplex-link $n(2) $n(9) 50Mb 20ms DropTail;
+$ns duplex-link $n(9) $n(23) 50Mb 20ms DropTail;
+$ns duplex-link $n(9) $n(24) 50Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(3) 50Mb 20ms DropTail;
+$ns duplex-link $n(3) $n(10) 50Mb 20ms DropTail;
+$ns duplex-link $n(10) $n(25) 50Mb 20ms DropTail;
+$ns duplex-link $n(10) $n(26) 50Mb 20ms DropTail;
+$ns duplex-link $n(3) $n(11) 50Mb 20ms DropTail;
+$ns duplex-link $n(11) $n(27) 50Mb 20ms DropTail;
+$ns duplex-link $n(11) $n(28) 50Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(4) 50Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(12) 50Mb 20ms DropTail;
+$ns duplex-link $n(12) $n(29) 50Mb 20ms DropTail;
+$ns duplex-link $n(12) $n(30) 50Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(13) 50Mb 20ms DropTail;
+$ns duplex-link $n(13) $n(31) 50Mb 20ms DropTail;
+$ns duplex-link $n(13) $n(32) 50Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(14) 50Mb 20ms DropTail;
+$ns duplex-link $n(14) $n(33) 50Mb 20ms DropTail;
+$ns duplex-link $n(14) $n(34) 50Mb 20ms DropTail;
+# 链路队列长度
+$ns queue-limit $n(0) $n(1) 10000
+$ns duplex-link $n(1) $n(5) 5000
+$ns duplex-link $n(5) $n(15) 2000
+$ns duplex-link $n(5) $n(16) 2000
+$ns duplex-link $n(1) $n(6) 5000
+$ns duplex-link $n(6) $n(17) 2000
+$ns duplex-link $n(6) $n(18) 2000
+$ns duplex-link $n(1) $n(7) 5000
+$ns duplex-link $n(7) $n(19) 2000
+$ns duplex-link $n(7) $n(20) 2000
+$ns duplex-link $n(0) $n(2) 9000
+$ns duplex-link $n(2) $n(8) 3000
+$ns duplex-link $n(8) $n(21) 1000
+$ns duplex-link $n(8) $n(22) 1000
+$ns duplex-link $n(2) $n(9) 4000
+$ns duplex-link $n(9) $n(23) 1500
+$ns duplex-link $n(9) $n(24) 1500
+$ns duplex-link $n(0) $n(3) 10000
+$ns duplex-link $n(3) $n(10) 6000
+$ns duplex-link $n(10) $n(25) 2000
+$ns duplex-link $n(10) $n(26) 1000
+$ns duplex-link $n(3) $n(11) 7000
+$ns duplex-link $n(11) $n(27) 4000
+$ns duplex-link $n(11) $n(28) 5000
+$ns duplex-link $n(0) $n(4) 8000
+$ns duplex-link $n(4) $n(12) 5000
+$ns duplex-link $n(12) $n(29) 2000
+$ns duplex-link $n(12) $n(30) 1000
+$ns duplex-link $n(4) $n(13) 4500
+$ns duplex-link $n(13) $n(31) 2000
+$ns duplex-link $n(13) $n(32) 1500
+$ns duplex-link $n(4) $n(14) 3000
+$ns duplex-link $n(14) $n(33) 50Mb 2000
+$ns duplex-link $n(14) $n(34) 50Mb 1000
+#设置链路连接状况
+set ls(1) 0;
+set ld(1) 1;
+set ls(2) 1;
+set ld(2) 5;
+set ls(3) 5;
+set ld(3) 15;
+set ls(4) 5;
+set ld(4) 16;
+set ls(5) 1;
+set ld(5) 6;
+set ls(6) 6;
+set ld(6) 17;
+set ls(7) 6;
+set ld(7) 18;
+set ls(8) 1;
+set ld(8) 7;
+set ls(9) 7;
+set ld(9) 19;
+set ls(10) 7;
+set ld(10) 20;
+set ls(11) 0;
+set ld(11) 2;
+set ls(12) 2;
+set ld(12) 8;
+set ls(13) 8;
+set ld(13) 21;
+set ls(14) 8;
+set ld(14) 22;
+set ls(15) 2;
+set ld(15) 9;
+set ls(16) 9;
+set ld(16) 23;
+set ls(17) 9;
+set ld(17) 24;
+set ls(18) 0;
+set ld(18) 3;
+set ls(19) 3;
+set ld(19) 10;
+set ls(20) 10;
+set ld(20) 25;
+set ls(21) 10;
+set ld(21) 26;
+set ls(22) 3;
+set ld(22) 11;
+set ls(23) 11;
+set ld(23) 27;
+set ls(24) 11;
+set ld(24) 28;
+set ls(25) 0;
+set ld(25) 4;
+set ls(26) 4;
+set ld(26) 12;
+set ls(27) 12;
+set ld(27) 29;
+set ls(28) 12;
+set ld(28) 30;
+set ls(29) 4;
+set ld(29) 13;
+set ls(30) 13;
+set ld(30) 31;
+set ls(31) 13;
+set ld(31) 32;
+set ls(32) 4;
+set ld(32) 14;
+set ls(33) 14;
+set ld(33) 33;
+set ls(34) 14;
+set ld(34) 34;
+# 添加UDP流量
+# 设置UDP条数
+set link_udp_num 100;
+
+# 设置每一条UDP流量的起始与结束时间
+for {set i 1} {$i <= $link_unm} {incr i} {
+        for {set j 1} {$j <= $link_udp_num} {incr j} {
+                set u [new RandomVariable/Uniform]
+                $u use-rng $rng
+                $u set min_ $start_time
+                $u set max_ [expr $start_time + ($ended_time - $start_time) * 0.1]
+                set udp_t($i,$j) [expr [$u value]]
+                set udp_e($i,$j) [expr $ended_time -($ended_time - $start_time) * 0.1]
+        }
+}
+# 设置每一条UDP流量
+for {set i 1} {$i <= $link_num}
+
