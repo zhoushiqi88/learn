@@ -8,7 +8,7 @@ proc finish {} {
         exit 0
 }
 set start_time 0.00000000;
-set dende_time 40;
+set ended_time 40;
 set packet_interval 0.05;
 set dest_node_num 20;
 set dest_node_start 15;
@@ -58,39 +58,39 @@ $ns duplex-link $n(14) $n(33) 50Mb 20ms DropTail;
 $ns duplex-link $n(14) $n(34) 50Mb 20ms DropTail;
 # 链路队列长度
 $ns queue-limit $n(0) $n(1) 10000
-$ns duplex-link $n(1) $n(5) 5000
-$ns duplex-link $n(5) $n(15) 2000
-$ns duplex-link $n(5) $n(16) 2000
-$ns duplex-link $n(1) $n(6) 5000
-$ns duplex-link $n(6) $n(17) 2000
-$ns duplex-link $n(6) $n(18) 2000
-$ns duplex-link $n(1) $n(7) 5000
-$ns duplex-link $n(7) $n(19) 2000
-$ns duplex-link $n(7) $n(20) 2000
-$ns duplex-link $n(0) $n(2) 9000
-$ns duplex-link $n(2) $n(8) 3000
-$ns duplex-link $n(8) $n(21) 1000
-$ns duplex-link $n(8) $n(22) 1000
-$ns duplex-link $n(2) $n(9) 4000
-$ns duplex-link $n(9) $n(23) 1500
-$ns duplex-link $n(9) $n(24) 1500
-$ns duplex-link $n(0) $n(3) 10000
-$ns duplex-link $n(3) $n(10) 6000
-$ns duplex-link $n(10) $n(25) 2000
-$ns duplex-link $n(10) $n(26) 1000
-$ns duplex-link $n(3) $n(11) 7000
-$ns duplex-link $n(11) $n(27) 4000
-$ns duplex-link $n(11) $n(28) 5000
-$ns duplex-link $n(0) $n(4) 8000
-$ns duplex-link $n(4) $n(12) 5000
-$ns duplex-link $n(12) $n(29) 2000
-$ns duplex-link $n(12) $n(30) 1000
-$ns duplex-link $n(4) $n(13) 4500
-$ns duplex-link $n(13) $n(31) 2000
-$ns duplex-link $n(13) $n(32) 1500
-$ns duplex-link $n(4) $n(14) 3000
-$ns duplex-link $n(14) $n(33) 50Mb 2000
-$ns duplex-link $n(14) $n(34) 50Mb 1000
+$ns queue-limit $n(1) $n(5) 5000
+$ns queue-limit $n(5) $n(15) 2000
+$ns queue-limit $n(5) $n(16) 2000
+$ns queue-limit $n(1) $n(6) 5000
+$ns queue-limit $n(6) $n(17) 2000
+$ns queue-limit $n(6) $n(18) 2000
+$ns queue-limit $n(1) $n(7) 5000
+$ns queue-limit $n(7) $n(19) 2000
+$ns queue-limit $n(7) $n(20) 2000
+$ns queue-limit $n(0) $n(2) 9000
+$ns queue-limit $n(2) $n(8) 3000
+$ns queue-limit $n(8) $n(21) 1000
+$ns queue-limit $n(8) $n(22) 1000
+$ns queue-limit $n(2) $n(9) 4000
+$ns queue-limit $n(9) $n(23) 1500
+$ns queue-limit $n(9) $n(24) 1500
+$ns queue-limit $n(0) $n(3) 10000
+$ns queue-limit $n(3) $n(10) 6000
+$ns queue-limit $n(10) $n(25) 2000
+$ns queue-limit $n(10) $n(26) 1000
+$ns queue-limit $n(3) $n(11) 7000
+$ns queue-limit $n(11) $n(27) 4000
+$ns queue-limit $n(11) $n(28) 5000
+$ns queue-limit $n(0) $n(4) 8000
+$ns queue-limit $n(4) $n(12) 5000
+$ns queue-limit $n(12) $n(29) 2000
+$ns queue-limit $n(12) $n(30) 1000
+$ns queue-limit $n(4) $n(13) 4500
+$ns queue-limit $n(13) $n(31) 2000
+$ns queue-limit $n(13) $n(32) 1500
+$ns queue-limit $n(4) $n(14) 3000
+$ns queue-limit $n(14) $n(33) 2000
+$ns queue-limit $n(14) $n(34) 1000
 #设置链路连接状况
 set ls(1) 0;
 set ld(1) 1;
@@ -165,7 +165,7 @@ set ld(34) 34;
 set link_udp_num 100;
 
 # 设置每一条UDP流量的起始与结束时间
-for {set i 1} {$i <= $link_unm} {incr i} {
+for {set i 1} {$i <= $link_num} {incr i} {
         for {set j 1} {$j <= $link_udp_num} {incr j} {
                 set u [new RandomVariable/Uniform]
                 $u use-rng $rng
@@ -178,7 +178,7 @@ for {set i 1} {$i <= $link_unm} {incr i} {
 # 设置每一条UDP流量
 for {set i 1} {$i <= $link_num} {incr i} {
         for {set j 1} {$j <= $link_udp_num} {incr j} {
-                set s_udp{$i,$j} [new Agent/UDP]
+                set s_udp($i,$j) [new Agent/UDP]
                 $ns attach-agent $n($ls($i)) $s_udp($i,$j)
                 set d_null($i,$j) [new Agent/Null]
                 $ns attach-agent $n($ld($i)) $d_null($i,$j)
@@ -190,7 +190,7 @@ for {set i 1} {$i <= $link_num} {incr i} {
                 $par($i,$j) set idle_time_ 200ms;
                 $par($i,$j) set rate_ 0.1Mb;
                 $par($i,$j) set packetSize_ 500
-                $par($i,$j) set shape_1.5
+                $par($i,$j) set shape_ 1.5
         }
 }
 # 添加TCP流量
