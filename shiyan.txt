@@ -213,10 +213,73 @@ for {set i 1} {$i <= $link_num} {incr i} {
                 set l_stop($i,$j) [expr [$lte value]]
         }
 }
-# 设置每一条UDP流量
+# 设置每一条TCP流量
 for {set i 1} {$i <= $link_num} {incr i} {
         for {set j 1} {$j <= $path_tcp_num} {incr j} {
-                
+            set l_tcp($i,$j) [new Agent/TCP/Newreno]
+            $ns attach-agent $n($ls($i)) $l_tcp($i,$j)
+            set l_sink($i,$j) [new Agent/TCPSink/DelAck]
+            $ns attach-agent $n($ld($i)) $l_sink($i,$j)
+            $ns connect $l_tcp($i,$j) $l_sink($i,$j)
+            $l_tcp($i,$j) set fid_ 3
+            $l_tcp($i,$j) set packetsize_ 500
+            $l_tcp($i,$j) set rate_ 0.10Mb
+
+            #将TCP绑定在FTP应用上
+            set l_tcp($i,$j) [$l_tcp($i,$j) attach-source FTP]    
         }
 }
 
+#产生探测包
+set k 1
+set Simulation_num [expr ($ended_time - start_time) / ($packet_interval)]
+#每个小包以CBR形式的UDP流发送
+for {set i $dest_node_start}  {$i <= $dest_node_end} {incr i} {
+        for {set j 0} {$j < $Simulation_num} {incr j} {
+                #设置每个包唯一标识符
+                set m [expr $i * 100 + $j];
+                set udpm($m,$j) [new Agent/UDP]
+                $ns attach-agent $n(0) $udpm($m,$j)
+                set nullm($m,$j) [new Agent/Null]
+                $ns attach-agent $n($i) $nullm($m,$j)
+                $ns connect $udpm($m,$j) $nullm($m,$j)
+                $udpm($m,$j) set fid_ $k
+                #创建一个固定的比特率产生器(CBR)
+                set cbrm($m,$j) [new Application/Traffic/CBR];
+                $cbrm($m,$j) attach-agent $udpm($m,$j)
+                $cbrm($m,$j) set type_ CBR
+                $cbrm($m,$j) set packetSize_ 10
+                $cbrm($m,$j) set interval_ $packet_interval
+                $cbrm($m,$j) set random_ false
+
+                incr k
+        }
+}
+for {set i $dest_node_start}  {$i <= $dest_node_end} {incr i} {
+        for {set j 0} {$j < $Simulation_num} {incr j} {
+                set randomNum [new RandomVariable/Uniform]
+                $randomNum set min_ 0
+                $randomNum set max_ dest_node_num
+                $randomNum use-rng $rng
+                set this_startTime [expr $packet_interval * $j + 0.00000001 + $randomNum * 0.0000000001]
+                set this_endTime [expr $packet_interval * ($j+1) - 0.00000001]
+                set m [expr $i * 100 + $j]
+                $ns at $this_startTime "$cbrm($m,$j) start"
+                $ns at $this_endTime "$cbrm($m,$j) stop"
+        }
+}
+for {set i 1} {$i <= $link_num} {incr i} {
+        for {set j 1} {$j <= $link_udp_num} {incr j} {
+                $ns at $udp_t($i,$j) "$par($i,$j) start"
+                $ns at $udp_e($i,$j) "$par($i,$j) stop"
+        }
+}
+for {set i 1} {$i <= $link_num} {incr i} {
+        for {set j 1} {$j <= $path_tcp_num} {incr j} {
+                $ns at $l_start($i,$j) "$l_ftp($i,$j) start"
+                $ns at $l_stop($i,$j) "$l_ftp($i,$j) stop"
+        }
+}
+#结束仿真
+$ns at [expr $ended_time + 2] "finish"
+$ns run
