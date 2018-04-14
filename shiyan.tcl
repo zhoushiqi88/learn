@@ -57,40 +57,40 @@ $ns duplex-link $n(4) $n(14) 50Mb 20ms DropTail;
 $ns duplex-link $n(14) $n(33) 50Mb 20ms DropTail;
 $ns duplex-link $n(14) $n(34) 50Mb 20ms DropTail;
 # 链路队列长度
-$ns queue-limit $n(0) $n(1) 10000
-$ns queue-limit $n(1) $n(5) 5000
-$ns queue-limit $n(5) $n(15) 2000
-$ns queue-limit $n(5) $n(16) 2000
-$ns queue-limit $n(1) $n(6) 5000
-$ns queue-limit $n(6) $n(17) 2000
-$ns queue-limit $n(6) $n(18) 2000
-$ns queue-limit $n(1) $n(7) 5000
-$ns queue-limit $n(7) $n(19) 2000
-$ns queue-limit $n(7) $n(20) 2000
-$ns queue-limit $n(0) $n(2) 9000
-$ns queue-limit $n(2) $n(8) 3000
-$ns queue-limit $n(8) $n(21) 1000
-$ns queue-limit $n(8) $n(22) 1000
-$ns queue-limit $n(2) $n(9) 4000
-$ns queue-limit $n(9) $n(23) 1500
-$ns queue-limit $n(9) $n(24) 1500
-$ns queue-limit $n(0) $n(3) 10000
-$ns queue-limit $n(3) $n(10) 6000
-$ns queue-limit $n(10) $n(25) 2000
-$ns queue-limit $n(10) $n(26) 1000
-$ns queue-limit $n(3) $n(11) 7000
-$ns queue-limit $n(11) $n(27) 4000
-$ns queue-limit $n(11) $n(28) 5000
-$ns queue-limit $n(0) $n(4) 8000
-$ns queue-limit $n(4) $n(12) 5000
-$ns queue-limit $n(12) $n(29) 2000
-$ns queue-limit $n(12) $n(30) 1000
-$ns queue-limit $n(4) $n(13) 4500
-$ns queue-limit $n(13) $n(31) 2000
-$ns queue-limit $n(13) $n(32) 1500
-$ns queue-limit $n(4) $n(14) 3000
-$ns queue-limit $n(14) $n(33)  2000
-$ns queue-limit $n(14) $n(34)  1000
+$ns queue-limit $n(0) $n(1) 500
+$ns queue-limit $n(1) $n(5) 500
+$ns queue-limit $n(5) $n(15) 500
+$ns queue-limit $n(5) $n(16) 500
+$ns queue-limit $n(1) $n(6) 500
+$ns queue-limit $n(6) $n(17) 500
+$ns queue-limit $n(6) $n(18) 500
+$ns queue-limit $n(1) $n(7) 500
+$ns queue-limit $n(7) $n(19) 500
+$ns queue-limit $n(7) $n(20) 500
+$ns queue-limit $n(0) $n(2) 500
+$ns queue-limit $n(2) $n(8) 500
+$ns queue-limit $n(8) $n(21) 500
+$ns queue-limit $n(8) $n(22) 500
+$ns queue-limit $n(2) $n(9) 500
+$ns queue-limit $n(9) $n(23) 500
+$ns queue-limit $n(9) $n(24) 500
+$ns queue-limit $n(0) $n(3) 500
+$ns queue-limit $n(3) $n(10) 500
+$ns queue-limit $n(10) $n(25) 500
+$ns queue-limit $n(10) $n(26) 500
+$ns queue-limit $n(3) $n(11) 500
+$ns queue-limit $n(11) $n(27) 500
+$ns queue-limit $n(11) $n(28) 500
+$ns queue-limit $n(0) $n(4) 500
+$ns queue-limit $n(4) $n(12) 500
+$ns queue-limit $n(12) $n(29) 500
+$ns queue-limit $n(12) $n(30) 500
+$ns queue-limit $n(4) $n(13) 500
+$ns queue-limit $n(13) $n(31) 500
+$ns queue-limit $n(13) $n(32) 500
+$ns queue-limit $n(4) $n(14) 500
+$ns queue-limit $n(14) $n(33) 500
+$ns queue-limit $n(14) $n(34) 500
 #设置链路连接状况
 set ls(1) 0;
 set ld(1) 1;
