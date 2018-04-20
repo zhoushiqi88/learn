@@ -8,7 +8,7 @@ proc finish {} {
         exit 0
 }
 set start_time 0.00000000;
-set ended_time 40;
+set ended_time 20;
 set packet_interval 0.05;
 set dest_node_num 20;
 set dest_node_start 15;
@@ -22,40 +22,40 @@ for {set i 0} {$i < $node_num} {incr i} {
         set n($i) [$ns node]
 }
 # 创建链路
-$ns duplex-link $n(0) $n(1) 50Mb 20ms DropTail;
-$ns duplex-link $n(1) $n(5) 50Mb 20ms DropTail;
-$ns duplex-link $n(5) $n(15) 50Mb 20ms DropTail;
-$ns duplex-link $n(5) $n(16) 50Mb 20ms DropTail;
-$ns duplex-link $n(1) $n(6) 50Mb 20ms DropTail;
-$ns duplex-link $n(6) $n(17) 50Mb 20ms DropTail;
-$ns duplex-link $n(6) $n(18) 50Mb 20ms DropTail;
-$ns duplex-link $n(1) $n(7) 50Mb 20ms DropTail;
-$ns duplex-link $n(7) $n(19) 50Mb 20ms DropTail;
-$ns duplex-link $n(7) $n(20) 50Mb 20ms DropTail;
-$ns duplex-link $n(0) $n(2) 50Mb 20ms DropTail;
-$ns duplex-link $n(2) $n(8) 50Mb 20ms DropTail;
-$ns duplex-link $n(8) $n(21) 50Mb 20ms DropTail;
-$ns duplex-link $n(8) $n(22) 50Mb 20ms DropTail;
-$ns duplex-link $n(2) $n(9) 50Mb 20ms DropTail;
-$ns duplex-link $n(9) $n(23) 50Mb 20ms DropTail;
-$ns duplex-link $n(9) $n(24) 50Mb 20ms DropTail;
-$ns duplex-link $n(0) $n(3) 50Mb 20ms DropTail;
-$ns duplex-link $n(3) $n(10) 50Mb 20ms DropTail;
-$ns duplex-link $n(10) $n(25) 50Mb 20ms DropTail;
-$ns duplex-link $n(10) $n(26) 50Mb 20ms DropTail;
-$ns duplex-link $n(3) $n(11) 50Mb 20ms DropTail;
-$ns duplex-link $n(11) $n(27) 50Mb 20ms DropTail;
-$ns duplex-link $n(11) $n(28) 50Mb 20ms DropTail;
-$ns duplex-link $n(0) $n(4) 50Mb 20ms DropTail;
-$ns duplex-link $n(4) $n(12) 50Mb 20ms DropTail;
-$ns duplex-link $n(12) $n(29) 50Mb 20ms DropTail;
-$ns duplex-link $n(12) $n(30) 50Mb 20ms DropTail;
-$ns duplex-link $n(4) $n(13) 50Mb 20ms DropTail;
-$ns duplex-link $n(13) $n(31) 50Mb 20ms DropTail;
-$ns duplex-link $n(13) $n(32) 50Mb 20ms DropTail;
-$ns duplex-link $n(4) $n(14) 50Mb 20ms DropTail;
-$ns duplex-link $n(14) $n(33) 50Mb 20ms DropTail;
-$ns duplex-link $n(14) $n(34) 50Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(1) 2Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(5) 2Mb 20ms DropTail;
+$ns duplex-link $n(5) $n(15) 2Mb 20ms DropTail;
+$ns duplex-link $n(5) $n(16) 2Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(6) 2Mb 20ms DropTail;
+$ns duplex-link $n(6) $n(17) 2Mb 20ms DropTail;
+$ns duplex-link $n(6) $n(18) 2Mb 20ms DropTail;
+$ns duplex-link $n(1) $n(7) 2Mb 20ms DropTail;
+$ns duplex-link $n(7) $n(19) 2Mb 20ms DropTail;
+$ns duplex-link $n(7) $n(20) 2Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(2) 2Mb 20ms DropTail;
+$ns duplex-link $n(2) $n(8) 2Mb 20ms DropTail;
+$ns duplex-link $n(8) $n(21) 2Mb 20ms DropTail;
+$ns duplex-link $n(8) $n(22) 2Mb 20ms DropTail;
+$ns duplex-link $n(2) $n(9) 2Mb 20ms DropTail;
+$ns duplex-link $n(9) $n(23) 2Mb 20ms DropTail;
+$ns duplex-link $n(9) $n(24) 2Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(3) 2Mb 20ms DropTail;
+$ns duplex-link $n(3) $n(10) 2Mb 20ms DropTail;
+$ns duplex-link $n(10) $n(25) 2Mb 20ms DropTail;
+$ns duplex-link $n(10) $n(26) 2Mb 20ms DropTail;
+$ns duplex-link $n(3) $n(11) 2Mb 20ms DropTail;
+$ns duplex-link $n(11) $n(27) 2Mb 20ms DropTail;
+$ns duplex-link $n(11) $n(28) 2Mb 20ms DropTail;
+$ns duplex-link $n(0) $n(4) 2Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(12) 2Mb 20ms DropTail;
+$ns duplex-link $n(12) $n(29) 2Mb 20ms DropTail;
+$ns duplex-link $n(12) $n(30) 2Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(13) 2Mb 20ms DropTail;
+$ns duplex-link $n(13) $n(31) 2Mb 20ms DropTail;
+$ns duplex-link $n(13) $n(32) 2Mb 20ms DropTail;
+$ns duplex-link $n(4) $n(14) 2Mb 20ms DropTail;
+$ns duplex-link $n(14) $n(33) 2Mb 20ms DropTail;
+$ns duplex-link $n(14) $n(34) 2Mb 20ms DropTail;
 # 链路队列长度
 $ns queue-limit $n(0) $n(1) 500
 $ns queue-limit $n(1) $n(5) 500
@@ -162,7 +162,7 @@ set ls(34) 14;
 set ld(34) 34;
 # 添加UDP流量
 # 设置UDP条数
-set link_udp_num 100;
+set link_udp_num 40;
 
 # 设置每一条UDP流量的起始与结束时间
 for {set i 1} {$i <= $link_num} {incr i} {
@@ -194,7 +194,7 @@ for {set i 1} {$i <= $link_num} {incr i} {
         }
 }
 # 添加TCP流量
-set path_tcp_num [expr 50]
+set path_tcp_num [expr 10]
 
 # 设置每一条TCP流量的起始时间
 for {set i 1} {$i <= $link_num} {incr i} {
@@ -261,7 +261,7 @@ for {set i $dest_node_start}  {$i <= $dest_node_end} {incr i} {
                 $randomNum set min_ 0
                 $randomNum set max_ $dest_node_num
                 $randomNum use-rng $rng
-                set this_startTime [expr $packet_interval * $j + 0.00000001 + [$randomNum value] * 0.0000000001]
+                set this_startTime [expr $packet_interval * $j + 0.00000001 + [$randomNum value] * 0.000000001]
                 set this_endTime [expr $packet_interval * ($j+1) - 0.00000001]
                 set m [expr $i * 100 + $j]
                 $ns at $this_startTime "$cbrm($m,$j) start"
@@ -281,5 +281,5 @@ for {set i 1} {$i <= $link_num} {incr i} {
         }
 }
 #结束仿真
-$ns at [expr $ended_time + 2] "finish"
+$ns at [expr $ended_time + 5] "finish"
 $ns run

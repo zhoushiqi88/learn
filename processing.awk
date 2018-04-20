@@ -12,13 +12,14 @@ BEGIN {
         from_node = $3;
         to_node = $4;
         dst_addr = $10;
-        seq_num = $11;
+        seq_num = $12;
+	end_time[1000000] = 0;
         #处理事件
         if(event == "+" && from_node == "0") {
             sent_packet_num ++;
             start_time[seq_num] = time;
         }
-        if(event == "r" && to_node >=15) {
+        if(event == "r" && to_node >= 15) {
             received_packet_num ++;
             end_time[seq_num] = time;
         }
@@ -36,6 +37,6 @@ END {
     }
     average_delay = average_delay / received_packet_num;
     loss_rate = (sent_packet_num - received_packet_num) / sent_packet_num;
-    printf("%d %d\n",received_packet_num,sent_packet_num);
-    printf("%f %f\n",average_delay,loss_rate);
+    printf("received packet:%d sent packet:%d \n",received_packet_num,sent_packet_num);
+    printf("average delay:%f loss rate:%f\n",average_delay,loss_rate);
 }
