@@ -162,7 +162,8 @@ set ls(34) 14;
 set ld(34) 34;
 # 添加UDP流量
 # 设置UDP条数
-set link_udp_num 40;
+
+set link_udp_num 0;
 
 # 设置每一条UDP流量的起始与结束时间
 for {set i 1} {$i <= $link_num} {incr i} {
@@ -194,7 +195,7 @@ for {set i 1} {$i <= $link_num} {incr i} {
         }
 }
 # 添加TCP流量
-set path_tcp_num [expr 10]
+set path_tcp_num [expr 100]
 
 # 设置每一条TCP流量的起始时间
 for {set i 1} {$i <= $link_num} {incr i} {
